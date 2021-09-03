@@ -7,7 +7,7 @@ const TimerToDraw = () => {
   const [deckID, setDeckID] = useState(null);
   const [clicked, setClicked] = useState(false);
   const timerId = useRef(null);
-  // TODO rewatch videos why alery go right awaY? hide button
+  // TODO why timer go right awaY? hide button
   useEffect(() => {
     async function shuffle() {
       let deck = await axios.get(
