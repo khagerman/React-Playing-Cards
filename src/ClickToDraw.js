@@ -23,6 +23,7 @@ const ClickToDraw = () => {
       setImg(res.data.cards[0].image);
 
       setDeckLeft(deckLeft - 1);
+      console.log(deckLeft);
 
       if (deckLeft === 1) {
         alert("Error: no cards remaining!");

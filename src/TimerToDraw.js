@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const TimerToDraw = () => {
-  const [deckLeft, setDeckLeft] = useState(52);
+  let [deckLeft, setDeckLeft] = useState(52);
   const [img, setImg] = useState("");
   const [deckID, setDeckID] = useState(null);
   const [clicked, setClicked] = useState(false);
@@ -23,8 +23,15 @@ const TimerToDraw = () => {
         `https://deckofcardsapi.com/api/deck/${deckID}/draw/?count=1`
       );
 
-      setImg(res.data.cards[0].image);
+      console.log(deckLeft);
 
+      if (deckLeft === 0) {
+        setClicked(false);
+        console.log(clicked);
+        alert("Error: no cards remaining!");
+      }
+      setDeckLeft(deckLeft--);
+      setImg(res.data.cards[0].image);
       //   setDeckLeft(deckLeft - 1);
       //   if (deckLeft < 1) {
       //     alert("Error: no cards remaining!");
@@ -41,22 +48,26 @@ const TimerToDraw = () => {
 
   const toggleClicked = () => {
     setClicked(true);
-    console.log("clicked");
   };
 
   useEffect(() => {
-    timerId.current = setInterval(async () => {
-      await draw();
-    }, 1000);
+    if (clicked && !timerId.current) {
+      timerId.current = setInterval(async () => {
+        await draw();
+      }, 1000);
+    }
     return () => {
       clearInterval(timerId.current);
       timerId.current = null;
-      if (deckLeft === 1) {
-        alert("Error: no cards remaining!");
-
-        window.location.reload();
-      }
+      console.log("clean!");
     };
+
+    // clearInterval(timerId.current);
+    // timerId.current = null;
+
+    // alert("Error: no cards remaining!");
+
+    // window.location.reload();
   }, [clicked]);
 
   return (
@@ -65,12 +76,9 @@ const TimerToDraw = () => {
         {" "}
         <img src={img} />
       </div>
-      <button
-        style={clicked === false ? { diplay: "inherit" } : { diplay: "none" }}
-        onClick={toggleClicked}
-      >
-        Start Auto Draw!
-      </button>
+      <div style={{ display: clicked === false ? "block" : "none" }}>
+        <button onClick={toggleClicked}>Start Auto Draw!</button>
+      </div>
     </div>
   );
 };

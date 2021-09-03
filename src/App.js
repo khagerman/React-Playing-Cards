@@ -6,9 +6,9 @@ function App() {
   return (
     <div className="App">
       {
-        <TimerToDraw />
+        // <TimerToDraw />
 
-        /* <ClickToDraw /> */
+        <ClickToDraw />
       }
     </div>
   );
