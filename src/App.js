@@ -1,10 +1,15 @@
 import logo from "./logo.svg";
 import "./App.css";
 import ClickToDraw from "./ClickToDraw";
+import TimerToDraw from "./TimerToDraw";
 function App() {
   return (
     <div className="App">
-      <ClickToDraw />
+      {
+        <TimerToDraw />
+
+        /* <ClickToDraw /> */
+      }
     </div>
   );
 }
